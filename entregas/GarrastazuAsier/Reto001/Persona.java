@@ -6,7 +6,7 @@ public class Persona {
         productosRestantes = numeroProductos;
     }
 
-    public int getProductosRestantes() {
+    public int obtenerProductosRestantes() {
         return productosRestantes;
     }
 
