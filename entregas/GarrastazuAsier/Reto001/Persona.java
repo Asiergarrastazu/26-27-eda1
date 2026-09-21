@@ -1,12 +1,16 @@
 public class Persona {
 
-    private int minutoLlegada;
+    private int productosRestantes;
 
-    public Persona(int minutoLlegada) {
-        this.minutoLlegada = minutoLlegada;
+    public Persona(int numeroProductos) {
+        productosRestantes = numeroProductos;
     }
 
-    public int getMinutoLlegada() {
-        return minutoLlegada;
+    public int getProductosRestantes() {
+        return productosRestantes;
+    }
+
+    public void pasarProducto() {
+        productosRestantes--;
     }
 }
