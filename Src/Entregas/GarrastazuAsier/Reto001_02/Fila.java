@@ -2,6 +2,7 @@ package Src.Entregas.GarrastazuAsier.Reto001_02;
 
 
 public class Fila {
+    
     private Cliente primero;
     private Cliente ultimo;
     private int cantidad;
@@ -11,7 +12,9 @@ public class Fila {
         ultimo = null;
         cantidad = 0;
     }
-    public void añadirCliente(Cliente cliente){
+    
+    public void añadirCliente(){
+
         Cliente nuevo = new Cliente();
         
         if (cantidad == 0){
@@ -24,6 +27,16 @@ public class Fila {
         }
 
         cantidad++;
+    }
+
+    public void atenderCliente(){
+
+        if (cantidad > 0){
+            primero = primero.getSiguiente();
+            cantidad--;
+        } else {
+            System.out.println("No hay clientes en la fila.");
+        }
     }
 
 
