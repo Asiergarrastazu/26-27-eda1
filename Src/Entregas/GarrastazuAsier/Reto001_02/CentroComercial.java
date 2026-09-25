@@ -14,8 +14,20 @@ public class CentroComercial {
             if (Math.random() < 0.4){
                 fila.atenderCliente();
             }
+            if (minuto >= 20 && minuto % 5 == 0) {
+                fila.abandonarAburridos(minuto);
+            }
+
+            System.out.println(
+                "Minuto " + minuto +
+                " | Personas en fila: " + fila.getCantidad()
+            );
         }
 
+        System.out.println();
+        System.out.println("Personas atendidas: " + atendidos);
+        System.out.println("Personas que quedan en fila: "
+                + fila.getCantidad());
     }
-
 }
+

@@ -13,9 +13,9 @@ public class Fila {
         cantidad = 0;
     }
     
-    public void añadirCliente(){
+    public void añadirCliente(int minutoLlegada){
 
-        Cliente nuevo = new Cliente();
+        Cliente nuevo = new Cliente(minutoLlegada);
         
         if (cantidad == 0){
             primero = nuevo;
@@ -38,6 +38,42 @@ public class Fila {
             System.out.println("No hay clientes en la fila.");
         }
     }
+    public void abandonarAburridos(int minutoActual) {
 
+    Cliente anterior = null;
+    Cliente actual = primero;
 
+    while (actual != null) {
+
+        if (minutoActual - actual.getMinutoLlegada() > 8) {
+
+            if (Math.random() < 0.3) {
+
+                
+                if (anterior == null) {
+                    primero = actual.getSiguiente();
+                } else {
+                    anterior.setSiguiente(actual.getSiguiente());
+                }
+
+                
+                if (actual == ultimo) {
+                    ultimo = anterior;
+                }
+
+                cantidad--;
+
+                actual = actual.getSiguiente();
+
+            } else {
+                anterior = actual;
+                actual = actual.getSiguiente();
+            }
+
+        } else {
+            anterior = actual;
+            actual = actual.getSiguiente();
+        }
+    }
+}
 }
