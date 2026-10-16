@@ -1,21 +1,66 @@
-# Estructura, vistas y justificación
+# Propuesta de implementación de la votación
 
-## 1. Array de votos
+## 1. Declaración de los arrays
 
-Se utiliza un array de tipo `int`, cuyo tamaño es igual al número de candidatos más dos posiciones adicionales.
+Para afrontar el desarrollo del sistema de votación, utilizaría dos arrays paralelos que permitan almacenar y gestionar la información necesaria para realizar el recuento.
 
-- **Función:** almacenar el número de votos recibidos por cada candidato, así como contabilizar las abstenciones y los votos nulos.
-- **Organización:** cada posición del array representa a un candidato o a uno de los dos tipos de voto adicionales.
-- **Justificación:** este sistema permite almacenar únicamente los resultados numéricos, sin asociar cada voto a una persona concreta. De este modo, se favorece el anonimato de los votantes. Además, el uso de un array permite gestionar los datos de forma sencilla y eficiente, aprovechando adecuadamente los recursos disponibles.
+- **Array de candidatos (`String`):** almacenaría los nombres de los candidatos, junto con las etiquetas correspondientes a las abstenciones y los votos nulos.
+- **Array de votos (`int`):** almacenaría la cantidad de votos obtenidos por cada candidato, así como el número de abstenciones y votos nulos.
 
-## 2. Array de candidatos
+Ambos arrays tendrían un tamaño igual al número de candidatos más dos posiciones adicionales.
 
-Se utiliza un array de tipo `String` para almacenar los nombres de los candidatos. Su tamaño es igual al número de candidatos más dos posiciones adicionales, destinadas a representar las abstenciones y los votos nulos.
+| Array | Tipo de dato | Finalidad |
+|---|---|---|
+| `candidatos` | `String` | Almacenar los nombres de los candidatos y las categorías adicionales. |
+| `votos` | `int` | Contabilizar los votos correspondientes a cada posición. |
 
-- **Función:** guardar los nombres de los candidatos y facilitar su identificación al consultar los resultados de la votación.
-- **Organización:** cada posición del array corresponde a un candidato, manteniendo la misma estructura que el array de votos. Las dos posiciones adicionales permiten identificar las abstenciones y los votos nulos.
-- **Justificación:** se utiliza un array porque el número de candidatos se conoce de antemano y permanece fijo durante la ejecución del programa. Por tanto, no es necesario emplear una estructura de datos dinámica que permita modificar su tamaño. Esto simplifica la implementación y facilita la relación entre cada candidato y su número de votos.
+## 2. Inicialización de las estructuras
 
-## 3. Relación entre ambos arrays
+Una vez declarados los arrays, introduciría los nombres de los candidatos en las primeras posiciones. Las dos últimas posiciones se reservarían para las abstenciones y los votos nulos.
 
-Los dos arrays mantienen la misma estructura, de manera que cada posición del array de candidatos se corresponde con la posición equivalente del array de votos. Así, es posible consultar el nombre de cada candidato y el número de votos que ha obtenido utilizando el mismo índice.
+Posteriormente, inicializaría todas las posiciones del array de votos a cero, ya que al comienzo de la votación todavía no se habría contabilizado ningún voto.
+
+Por ejemplo, para tres candidatos, la distribución sería la siguiente:
+
+| Índice | Array `candidatos` | Array `votos` |
+|:---:|---|:---:|
+| 0 | Candidato 1 | 0 |
+| 1 | Candidato 2 | 0 |
+| 2 | Candidato 3 | 0 |
+| 3 | Abstenciones | 0 |
+| 4 | Votos nulos | 0 |
+
+## 3. Registro y contabilización de los votos
+
+A continuación, implementaría el proceso de recogida de votos. Para ello, comprobaría a qué candidato o categoría corresponde cada voto y aumentaría en una unidad el contador de la posición correspondiente del array `votos`.
+
+El procedimiento se repetiría hasta que finalizase la votación.
+
+```text
+       ┌───────────────────┐
+       │    Recibir voto   │
+       └─────────┬─────────┘
+                 │
+                 ▼
+       ┌───────────────────┐
+       │ Identificar el    │
+       │ tipo de voto      │
+       └─────────┬─────────┘
+                 │
+                 ▼
+       ┌───────────────────┐
+       │ Incrementar la    │
+       │ posición adecuada │
+       └─────────┬─────────┘
+                 │
+                 ▼
+       ┌───────────────────┐
+       │ ¿Quedan votos     │
+       │ por registrar?    │
+       └─────────┬─────────┘
+                 │
+          Sí ────┴──── No
+           │           │
+           ▼           ▼
+      Recibir otro   Mostrar los
+         voto        resultados
