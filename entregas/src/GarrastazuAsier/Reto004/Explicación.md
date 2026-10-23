@@ -1,26 +1,26 @@
-# Estructuras de datos para un programa de elecciones en Java
-
 | **Dato** | **Decisión** | **Justificación** | **Alternativa descartada** | **Limitación asumida** |
 |---|---|---|---|---|
-| **Censo / Alumnos electores** | Lista dinámica (`ArrayList`) | Permite añadir alumnos y eliminar registros cuando sea necesario, adaptándose a los cambios del censo. | Vector de tamaño fijo | Buscar un alumno por nombre requiere recorrer la lista. |
-| **Papeletas depositadas (Urna)** | Cola (`Queue`) | Sigue el principio FIFO: la primera papeleta en entrar es la primera en salir durante el escrutinio. | Pila (`Stack`) | No permite acceder directamente a una papeleta concreta. |
-| **Historial de acciones** | Pila (`Deque`) | Permite deshacer la última operación registrada si se detecta un error durante el recuento. | Cola (`Queue`) | Para deshacer una operación antigua, hay que gestionar las operaciones posteriores. |
-| **Candidaturas** | Lista dinámica (`ArrayList`) | Permite añadir y retirar candidaturas durante la preparación de las elecciones. | Vector estático o enumeración (`enum`) | Comprobar si una candidatura existe requiere recorrer la lista. |
-| **Recuento de votos** | Tabla asociativa (`HashMap`) | Relaciona cada candidatura con el número de votos obtenidos y facilita actualizar el recuento. | Dos vectores paralelos | Es necesario comprobar que cada candidatura sea válida antes de contabilizar un voto. |
-| **Control de participación** | Conjunto (`HashSet`) | Almacena identificadores únicos de los alumnos que ya han votado y evita que participen más de una vez. | Lista dinámica (`ArrayList`) | No mantiene el orden de inserción y necesita identificadores únicos. |
-| **Identificación de alumnos** | Tabla asociativa (`HashMap`) | Permite localizar rápidamente a un alumno mediante su identificador. | Búsqueda secuencial | Los identificadores deben ser únicos y estar correctamente registrados. |
-| **Estado de las elecciones** | Enumeración (`enum`) | Define los estados posibles, como preparación, votación abierta y votación cerrada. | Variable de texto (`String`) | Hay que programar las reglas que determinan qué operaciones están permitidas en cada estado. |
-| **Resultados finales** | Clase `Resultado` | Agrupa los votos obtenidos por cada candidatura, los votos en blanco y los votos nulos. | Variables independientes | Requiere crear y mantener una clase adicional. |
-| **Almacenamiento de datos** | Archivos o base de datos | Permite conservar el censo, las candidaturas y los resultados después de cerrar el programa. | Almacenamiento exclusivo en memoria | Es necesario controlar los errores de lectura y escritura para evitar pérdidas de información. |
+| **Censo / Alumnos presentes** | Lista enlazada dinámica propia (`Nodo`) | Permite añadir y eliminar alumnos durante la ejecución del programa. | Array de tamaño fijo | Buscar un alumno requiere recorrer la lista. |
+| **Papeletas depositadas (Urna)** | Cola (`Queue`) | Sigue el principio FIFO: la primera papeleta en entrar es la primera en salir. | Pila (`Stack`) | No permite acceder directamente a una papeleta del interior. |
+| **Historial de acciones** | Pila (`Stack`) | Permite recuperar la última acción registrada para deshacerla. | Cola (`Queue`) | Para deshacer una acción antigua, hay que gestionar las acciones posteriores. |
+| **Candidaturas activas** | Lista dinámica (`ArrayList`) | Permite añadir, consultar y retirar candidaturas durante la preparación de las elecciones. | Array de tamaño fijo | Buscar una candidatura requiere recorrer la lista. |
+| **Recuento de votos** | Array de enteros (`int[]`) | Guarda el número de votos de cada candidatura mediante una posición asociada a cada candidato. | Variables independientes para cada candidato | Si cambian las candidaturas, hay que adaptar el array y mantener correctamente la correspondencia entre posiciones y candidatos. |
+| **Control de participación** | Lista de identificadores (`ArrayList<String>`) | Permite comprobar si un alumno ya ha votado antes de aceptar otro voto. | Variables independientes | Hay que recorrer la lista para comprobar si un alumno ya ha votado. |
+| **Identificación de alumnos** | Búsqueda secuencial en la lista enlazada | Permite comprobar si un alumno pertenece al censo utilizando los nodos. | Estructuras asociativas | La búsqueda puede ser lenta si el censo tiene muchos alumnos. |
+| **Estado de las elecciones** | Variable `boolean` | Indica si la votación está abierta (`true`) o cerrada (`false`). | Enumeración (`enum`) | Solo representa dos estados; no permite distinguir directamente entre preparación, votación y escrutinio. |
+| **Resultados finales** | Clase `Resultado` | Agrupa los votos obtenidos por cada candidatura y los votos en blanco y nulos. | Variables independientes | Requiere crear una clase adicional. |
+| **Almacenamiento de datos** | Archivos, si se han estudiado en clase | Permite guardar los resultados para consultarlos después de cerrar el programa. | Mantener los datos solo en memoria | Sin almacenamiento permanente, los datos se pierden al cerrar el programa. |
 
-## Organización de las clases en Java
+## Clases que se deben crear
 
 | **Clase** | **Función principal** |
 |---|---|
-| `Alumno` | Almacenar los datos y el identificador de cada elector. |
-| `Candidato` | Guardar la información de cada candidatura. |
-| `Voto` | Representar una papeleta electoral. |
-| `Eleccion` | Gestionar el censo, las candidaturas y el proceso electoral. |
-| `Recuento` | Contabilizar los votos y calcular los resultados. |
-| `Historial` | Registrar las operaciones que pueden deshacerse. |
-| `Elecciones` | Mostrar el menú y permitir la interacción con el usuario. |
+| `Alumno` | Guarda los datos de cada alumno. |
+| `Nodo` | Guarda un alumno y la referencia al siguiente nodo. |
+| `ListaAlumnos` | Gestiona la lista enlazada dinámica del censo. |
+| `Candidato` | Guarda los datos de cada candidato. |
+| `Voto` | Representa una papeleta electoral. |
+| `Eleccion` | Gestiona el proceso electoral. |
+| `Recuento` | Contabiliza los votos. |
+| `Historial` | Registra las acciones que se pueden deshacer. |
+| `Principal` | Contiene el método `main` y el menú del programa. |
