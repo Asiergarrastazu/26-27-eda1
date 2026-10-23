@@ -5,11 +5,6 @@ import java.util.ArrayList;
 
 public class Eleccion {
 
-
-import java.util.ArrayList;
-
-public class Eleccion {
-
     private ListaAlumnos censo;
     private ArrayList<Candidato> candidatos;
     private ColaVotos urna;
