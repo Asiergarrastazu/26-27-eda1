@@ -1,17 +1,19 @@
 package GarrastazuAsier.Reto004;
 
+import java.util.ArrayList;
+
 public class Recuento {
     private int[] votosCandidatos;
     private int votosBlancos;
     private int votosNulos;
 
-    public Recuento(int numeroCandidatos) {
-        votosCandidatos = new int[numeroCandidatos];
+    public Recuento(ArrayList<Candidato> candidatos) {
+        votosCandidatos = new int[candidatos.size()];
         votosBlancos = 0;
         votosNulos = 0;
     }
 
-    public void contarVoto(Voto voto, Candidato[] candidatos) {
+    public void contarVoto(Voto voto, ArrayList<Candidato> candidatos) {
         String nombre = voto.getCandidato();
 
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -19,9 +21,9 @@ public class Recuento {
             return;
         }
 
-        for (int i = 0; i < candidatos.length; i++) {
-            if (candidatos[i] != null &&
-                candidatos[i].getNombre().equalsIgnoreCase(nombre)) {
+        for (int i = 0; i < candidatos.size(); i++) {
+            if (candidatos.get(i).getNombre()
+                    .equalsIgnoreCase(nombre)) {
                 votosCandidatos[i]++;
                 return;
             }
@@ -30,16 +32,14 @@ public class Recuento {
         votosNulos++;
     }
 
-    public void mostrarResultados(Candidato[] candidatos) {
+    public void mostrarResultados(ArrayList<Candidato> candidatos) {
         System.out.println("=== RESULTADOS ELECTORALES ===");
 
-        for (int i = 0; i < candidatos.length; i++) {
-            if (candidatos[i] != null) {
-                System.out.println(
-                    candidatos[i].getNombre() + ": "
-                    + votosCandidatos[i] + " votos"
-                );
-            }
+        for (int i = 0; i < candidatos.size(); i++) {
+            System.out.println(
+                candidatos.get(i).getNombre() + ": "
+                + votosCandidatos[i] + " votos"
+            );
         }
 
         System.out.println("Votos en blanco: " + votosBlancos);
