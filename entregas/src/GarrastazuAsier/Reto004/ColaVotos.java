@@ -1,4 +1,6 @@
 package GarrastazuAsier.Reto004;
+
+
 public class ColaVotos {
     private NodoVoto primero;
     private NodoVoto ultimo;
