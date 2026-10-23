@@ -1,4 +1,4 @@
-package src.GarrastazuAsier.Reto004;
+package GarrastazuAsier.Reto004;
 
 public class Nodo {
     private String dato;

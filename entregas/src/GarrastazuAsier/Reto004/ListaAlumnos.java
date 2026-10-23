@@ -31,5 +31,20 @@ public class ListaAlumnos {
             actual = actual.getSiguiente();
         }
     }
-    
+
+    public Nodo buscar(String dato) {
+        Nodo actual = primero;
+
+        while (actual != null) {
+            if (actual.getDato().equals(dato)) {
+                return actual;
+            }
+
+            actual = actual.getSiguiente();
+        }
+
+        return null;
+    }
 }
+    
+
